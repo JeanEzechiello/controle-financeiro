@@ -26,8 +26,12 @@ app.get('/transacoes/:id', (req, res) => {
     res.json(transacao)
 })
 app.post ('/transacoes', (req,res) => {
-    const nova = req.body
-    nova.id = transacoes.length + 1
+   
+    const {descricao, valor, tipo} = req.body
+    if(!descricao || !valor || !tipo ) {
+        return res.status(400).json({ erro: 'descricao, valor e tipo são obrigatórios'})
+    }
+    const nova = { id: transacoes.length + 1, descricao, valor, tipo }
     transacoes.push(nova)
     res.status(201).json(nova)
 })
