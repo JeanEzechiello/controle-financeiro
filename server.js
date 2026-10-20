@@ -47,6 +47,24 @@ app.delete('/transacoes/:id', (req,res) => {
     res.status(204).send()
 })
 
+app.put('/transacoes/:id', (req,res) => {
+    const id = Number(req.params.id)
+    const transacao = transacoes.find(t => t.id === id)
+    if(!transacao) {
+        return res.status(404).json({erro: 'Transação não encontrada'})
+    }
+    const {descricao, valor, tipo} = req.body
+    if (!descricao || !valor || !tipo) {
+        return res.status(400).json({
+            erro: 'descricao, valor e tipo são obrigatórios'
+        })
+     }
+    transacao.descricao = descricao
+    transacao.valor = valor
+    transacao.tipo =  tipo
+    res.json(transacao)
+})
+
 app.listen(port, () => {
     console.log('Servidor rodando')
 })
