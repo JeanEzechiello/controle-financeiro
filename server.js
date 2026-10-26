@@ -1,4 +1,14 @@
 const express = require('express')
+const Database = require('better-sqlite3')
+const db = new Database('financeiro.db')
+db.exec(`
+    CREATE TABLE IF NOT EXISTS transacoes(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,   
+    descricao TEXT NOT NULL,
+    valor REAL NOT NULL,
+    tipo TEXT NOT NULL
+    )
+    `)
 const app = express()
 const port = 3000
 
