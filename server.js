@@ -42,8 +42,8 @@ app.post ('/transacoes', (req,res) => {
     if(!descricao || !valor || !tipo ) {
         return res.status(400).json({ erro: 'descricao, valor e tipo são obrigatórios'})
     }
-    const nova = { id: transacoes.length + 1, descricao, valor, tipo }
-    transacoes.push(nova)
+    const info = db.prepare('INSERT INTO transacoes (descricao, valor, tipo) VALUES (?, ?, ?)').run(descricao, valor, tipo)
+    const nova = {id: info.lastInsertRowid, descricao, valor, tipo}
     res.status(201).json(nova)
 })
 
