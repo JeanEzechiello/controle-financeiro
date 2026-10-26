@@ -24,7 +24,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/transacoes', (req, res) => {
-    res.json(transacoes)
+    const lista = db.prepare('SELECT * FROM transacoes').all()
+    res.json(lista)
 })
 
 app.get('/transacoes/:id', (req, res) => {
