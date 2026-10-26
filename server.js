@@ -30,7 +30,7 @@ app.get('/transacoes', (req, res) => {
 
 app.get('/transacoes/:id', (req, res) => {
     const id = Number(req.params.id)
-    const transacao = transacoes.find(t => t.id === id)
+    const transacao = db.prepare('SELECT * FROM transacoes WHERE id = ?').get(id)
     if(!transacao) {
         return res.status(404).json({erro: 'Transação não encontrada'})
     }
