@@ -58,20 +58,19 @@ app.delete('/transacoes/:id', (req,res) => {
 
 app.put('/transacoes/:id', (req,res) => {
     const id = Number(req.params.id)
-    const transacao = transacoes.find(t => t.id === id)
-    if(!transacao) {
-        return res.status(404).json({erro: 'Transação não encontrada'})
-    }
     const {descricao, valor, tipo} = req.body
     if (!descricao || !valor || !tipo) {
         return res.status(400).json({
             erro: 'descricao, valor e tipo são obrigatórios'
         })
      }
-    transacao.descricao = descricao
-    transacao.valor = valor
-    transacao.tipo =  tipo
-    res.json(transacao)
+    const info = db.prepare('UPDATE transacoes SET descricao = ?, valor = ?, tipo = ? WHERE id = ?').run(descricao, valor, tipo, id)
+
+    if(info.changes === 0) {
+        return res.status(404).json({erro: 'Transação não encontrada'})
+    }
+    
+     res.json({id, descricao, valor, tipo})
 })
 
 app.listen(port, () => {
