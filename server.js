@@ -14,11 +14,6 @@ const port = 3000
 
 app.use(express.json())
 
-const transacoes = [ 
-    {id:1, descricao:'Salário', valor:1200, tipo: 'receita'}, 
-    {id:2, descricao: 'Internet', valor:80, tipo: 'despesa'}
-]
-
 app.get('/', (req, res) => {
     res.send('Olá controle financeiro!')
 })
