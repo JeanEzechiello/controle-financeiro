@@ -2,12 +2,13 @@
 
 API REST de controle financeiro pessoal, feita com Node.js e Express. Permite criar, listar, editar e apagar transações (receitas e despesas), com validação de dados e tratamento de erros.
 
-> Projeto em desenvolvimento. Atualmente os dados ficam em memória (somem ao reiniciar o servidor).
+> Projeto em desenvolvimento. Os dados ficam guardados num banco SQLite.
 
 ## Tecnologias
 
 - Node.js
 - Express
+- better-sqlite3
 
 ## Como rodar
 
@@ -43,6 +44,8 @@ node server.js
 | PUT | `/transacoes/:id` | Atualiza uma transação existente |
 | DELETE | `/transacoes/:id` | Remove uma transação |
 
+5. O arquivo do banco (`financeiro.db`) é criado automaticamente na primeira vez que o servidor sobe.
+
 ### Exemplo de corpo (POST e PUT)
 
 ```json
@@ -64,7 +67,7 @@ node server.js
 ## Próximos passos
 
 - [ ] Validar `tipo` (apenas `receita` ou `despesa`) e `valor` positivo
-- [ ] Trocar o array por um banco de dados (SQLite)
+- [x] Trocar o array por um banco de dados (SQLite)
 - [ ] Autenticação de usuários (login com JWT)
 - [ ] Front-end consumindo a API
 - [ ] Dashboard com gráficos
