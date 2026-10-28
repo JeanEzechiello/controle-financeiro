@@ -49,12 +49,10 @@ app.post ('/transacoes', (req,res) => {
 
 app.delete('/transacoes/:id', (req,res) => {
     const id = Number(req.params.id)
-    const indice = transacoes.findIndex(t => t.id === id)
-    if(indice === -1) {
+    const info = db.prepare('DELETE FROM transacoes WHERE id = ?').run(id)
+    if(info.changes === 0 ) {
         return res.status(404).json({erro: 'Transação não encontrada'})
     }
-        
-    transacoes.splice(indice, 1)
     res.status(204).send()
 })
 
